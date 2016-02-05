@@ -4,7 +4,7 @@
 import itertools
 import multiprocessing as mp
 
-N_PROC = 8
+N_PROC = 4
 
 N = 13
 FALSE_HEAVY = True
@@ -106,7 +106,7 @@ def submain(g):
     group_i,group = g
     balanced = [None,None,None]
 
-    print "[T=0] %d/%d" % (group_i+1, len_groups)
+    #print "%6d/%6d --" % (group_i+1, len_groups)
     balanced[0] = group
     left1 = group.left
     right1 = group.right
@@ -143,7 +143,7 @@ def submain(g):
     #print groups2
     len_groups2 = len(groups2)
     for group2_i,group2 in enumerate(groups2):
-        print "[T=0] %d/%d [T=1] %d/%d" % (group_i+1, len_groups, group2_i+1, len_groups2)
+        print "%6d/%6d  %6d/%6d" % (group_i+1, len_groups, group2_i+1, len_groups2)
         balanced[1] = group2
         left2 = group2.left
         right2 = group2.right
@@ -207,11 +207,11 @@ def submain(g):
             else:
                 # not strategy error
                 print "------- found strategy! ---------"
-                logfile = open("log.txt", "aw")
-                for i in xrange(3):
-                    logfile.write(balanced[i].get_str())
-                    logfile.write(",")
-                logfile.write("\n")
+                with open("strategy.txt", "a") as logfile:
+                    for i in xrange(3):
+                        logfile.write(balanced[i].get_str())
+                        logfile.write(",")
+                    logfile.write("\n")
         
                     
 
